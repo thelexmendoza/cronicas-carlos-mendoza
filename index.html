@@ -160,6 +160,7 @@
   .s1 { --c: var(--fuerza); } .s2 { --c: var(--rebelion); }
   .s3 { --c: var(--nube); }   .s4 { --c: var(--hutt); } .s5 { --c: var(--endor); }
   .chapter .shade { background:
+      radial-gradient(ellipse 1000px 460px at 100% 0%, rgba(0,0,0,.72), rgba(0,0,0,0) 72%),
       linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 42%, rgba(0,0,0,0) 72%),
       linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 40%); }
   .chapter .num { position: absolute; left: 100px; top: 70px;
@@ -170,10 +171,13 @@
   .chapter h2 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight: 700; font-size: 128px;
     line-height: .92; text-transform: uppercase; }
   .chapter .hook { font-size: 34px; font-weight: 300; line-height: 1.4; color: rgba(243,241,234,.92); }
-  .chapter .meta { position: absolute; right: 110px; top: 110px; text-align: right;
+  .chapter .meta { position: absolute; right: 80px; top: 80px; text-align: right; padding: 26px 30px;
+    background: none;
     font-family:'IBM Plex Mono',monospace; font-size: 21px; letter-spacing: .16em; text-transform: uppercase; line-height: 1.8;
     text-shadow: 0 2px 14px rgba(0,0,0,.95), 0 0 4px rgba(0,0,0,.8); }
   .chapter .meta b { color: var(--c); font-weight: 500; }
+  .chapter .meta .loc { display: inline-block; margin-top: 14px; padding: 6px 14px; border: 1px solid var(--c); color: var(--c);
+    font-size: 17px; letter-spacing: .14em; background: rgba(0,0,0,.72); text-shadow: none; }
 
   /* ============ HISTORIA DE ESCENARIO ============ */
   .story .side { position: absolute; top: 0; right: 0; bottom: 0; width: 620px;
@@ -494,10 +498,10 @@
 
 <!-- 06 · ESCENARIO I · PORTADA -->
 <section class="slide chapter s1">
-  <div class="bg" style="background-image:url(img/escena-1.jpg), url(img/fondo-templo.jpg)"></div>
+  <div class="bg" style="background-image:url(img/escena-1.jpg), url(img/fondo-yavin.jpg)"></div>
   <div class="shade"></div>
   <div class="num">I</div>
-  <div class="meta"><b>La Fuerza</b><br>Luna de Vhar-Telos<br>1 DBY</div>
+  <div class="meta"><b>La Fuerza</b><br>Luna de Vhar-Telos<br>1 DBY<br><span class="loc">Filmado en Tikal, Guatemala</span></div>
   <div class="txt">
     <div class="kicker">Escenario I · El llamado</div>
     <div class="bar"></div>
@@ -546,7 +550,7 @@
   <div class="bg" style="background-image:url(img/escena-2.jpg), url(img/fondo-hoth.jpg)"></div>
   <div class="shade"></div>
   <div class="num">II</div>
-  <div class="meta"><b>La Rebelión</b><br>Base Eco · Hoth<br>3 DBY · Episodio V</div>
+  <div class="meta"><b>La Rebelión</b><br>Base Eco · Hoth<br>3 DBY · Episodio V<br><span class="loc">Filmado en Finse, Noruega</span></div>
   <div class="txt">
     <div class="kicker">Escenario II · El soldado común</div>
     <div class="bar"></div>
@@ -557,7 +561,7 @@
 
 <!-- 09 · ESCENARIO II · HISTORIA -->
 <section class="slide story s2">
-  <div class="side" style="background-image:url(img/escena-2b.jpg), url(img/escena-2.jpg), url(img/fondo-hoth.jpg)"></div>
+  <div class="side" style="background-image:url(img/escena-2b.jpg), url(img/fondo-nieve.jpg)"></div>
   <div class="main">
     <div class="kicker">Escenario II · La Rebelión</div>
     <h3>El hombre que no apagó el escáner</h3>
@@ -621,7 +625,7 @@
   <div class="bg" style="background-image:url(img/escena-3.jpg), url(img/fondo-bespin.jpg)"></div>
   <div class="shade"></div>
   <div class="num">III</div>
-  <div class="meta"><b>Bajo la ocupación</b><br>Ciudad Nube · Bespin<br>3 DBY · Episodio V</div>
+  <div class="meta"><b>Bajo la ocupación</b><br>Ciudad Nube · Bespin<br>3 DBY · Episodio V<br><span class="loc">Filmado en estudio · Elstree, Londres</span></div>
   <div class="txt">
     <div class="kicker">Escenario III · El ciudadano atrapado</div>
     <div class="bar"></div>
@@ -670,7 +674,7 @@
   <div class="bg" style="background-image:url(img/escena-4.jpg), url(img/fondo-tatooine.jpg)"></div>
   <div class="shade"></div>
   <div class="num">IV</div>
-  <div class="meta"><b>Los bajos fondos</b><br>Palacio de Jabba · Tatooine<br>4 DBY · Episodio VI</div>
+  <div class="meta"><b>Los bajos fondos</b><br>Palacio de Jabba · Tatooine<br>4 DBY · Episodio VI<br><span class="loc">Dunas del Sarlacc: Buttercup Valley, California</span></div>
   <div class="txt">
     <div class="kicker">Escenario IV · El golpe</div>
     <div class="bar"></div>
@@ -681,7 +685,7 @@
 
 <!-- 14 · ESCENARIO IV · HISTORIA -->
 <section class="slide story s4">
-  <div class="side" style="background-image:url(img/escena-4b.jpg), url(img/escena-4.jpg), url(img/fondo-tatooine.jpg)"></div>
+  <div class="side" style="background-image:url(img/escena-4b.jpg), url(img/fondo-lars.jpg)"></div>
   <div class="main">
     <div class="kicker">Escenario IV · Bajos fondos</div>
     <h3>Un barril derramado a tiempo</h3>
@@ -719,7 +723,7 @@
   <div class="bg" style="background-image:url(img/epilogo.jpg), url(img/fondo-endor.jpg)"></div>
   <div class="shade"></div>
   <div class="txt">
-    <div class="kicker">Epílogo · Endor · 4 DBY</div>
+    <div class="kicker">Epílogo · Endor · 4 DBY · Filmado entre las secuoyas de California</div>
     <h2>Al fondo de la fiesta</h2>
     <div class="cols">
       <p class="lead">El Imperio cae. Bajo los árboles de Endor hay tambores, fogatas y ewoks bailando. Si miras con atención el fondo de la celebración, verás a un hombre con barba y mochila verde contando a los invitados. Por costumbre.</p>
@@ -739,8 +743,12 @@
     <h2>FIN</h2>
     <div class="line">Que la logística te acompañe, Carlos.</div>
     <div class="small">
-      Fondos: fotografías de Unsplash por Олег Мороз, Steve Busch, Luca Pistollato, Fred Durana, Tomasz Kotarski,<br>
-      Benjamin Keeler, Nikola Ancevski, Gopal Krishna y Venti Views.<br>
+      Locaciones reales de la trilogía, vía Wikimedia Commons: Tikal por MusikAnimal (CC BY-SA 4.0) ·
+      Finse por CyberK no (CC BY-SA 3.0)<br>
+      Dunas de Algodones por Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0) · Hogar de los Lars por Stefan Krasowski (CC BY 2.0)<br>
+      Secuoyas de Jedediah Smith por Miguel Vieira (CC BY 2.0) · Westerlund 2 por NASA, ESA y Hubble Heritage Team (dominio público)<br>
+      Fotografías de Unsplash por Олег Мороз, Luca Pistollato, Tomasz Kotarski, Benjamin Keeler, Nikola Ancevski y Gopal Krishna.<br>
+      Imágenes recortadas y redimensionadas para la presentación.<br>
       Historia de fan sin fines de lucro. Star Wars, C-3PO y R2-D2 son propiedad de Lucasfilm Ltd.
     </div>
   </div>

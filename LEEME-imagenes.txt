@@ -7,16 +7,16 @@ LAS CRÓNICAS DE CARLOS MENDOZA: CÓMO PONER TUS MONTAJES
    Archivo          Lámina                        Fondo de referencia
    ---------------  ----------------------------  ----------------------
    portada.jpg      01 Portada                    fondo-portada.jpg
-   escena-1.jpg     06 Escenario I (portada)      fondo-templo.jpg
+   escena-1.jpg     06 Escenario I (portada)      fondo-yavin.jpg   (Tikal, Guatemala = Yavin 4)
    escena-1b.jpg    07 Escenario I (franja der.)  fondo-cristal.jpg
-   escena-2.jpg     08 Escenario II (portada)     fondo-hoth.jpg
-   escena-2b.jpg    09 Escenario II (franja der.) fondo-hoth.jpg
+   escena-2.jpg     08 Escenario II (portada)     fondo-hoth.jpg    (Finse, Noruega = Hoth)
+   escena-2b.jpg    09 Escenario II (franja der.) fondo-nieve.jpg
    se-busca.jpg     10 Afiche SE BUSCA (vertical) carlos.png
    escena-3.jpg     11 Escenario III (portada)    fondo-bespin.jpg
    escena-3b.jpg    12 Escenario III (franja der.) fondo-bespin.jpg
-   escena-4.jpg     13 Escenario IV (portada)     fondo-tatooine.jpg
-   escena-4b.jpg    14 Escenario IV (franja der.) fondo-tatooine.jpg
-   epilogo.jpg      15 Epílogo Endor              fondo-endor.jpg
+   escena-4.jpg     13 Escenario IV (portada)     fondo-tatooine.jpg (dunas del Sarlacc, California)
+   escena-4b.jpg    14 Escenario IV (franja der.) fondo-lars.jpg    (hogar de los Lars, Túnez)
+   epilogo.jpg      15 Epílogo Endor              fondo-endor.jpg   (secuoyas de California = Endor)
 
    Tamaños recomendados:
    - Portadas y epílogo: 1920 x 1080. El texto va a la IZQUIERDA, así que deja a Carlos a la derecha.
@@ -36,4 +36,5 @@ LAS CRÓNICAS DE CARLOS MENDOZA: CÓMO PONER TUS MONTAJES
    - F = pantalla completa. Enlace directo a una lámina: index.html#l9
    - Vista estática de una sola lámina: index.html#solo-7
 
-Créditos de los fondos: Unsplash (licencia libre). Los autores aparecen en la última lámina.
+Créditos de los fondos: Wikimedia Commons (CC BY / CC BY-SA / dominio público) y Unsplash.
+Las licencias CC piden dar crédito al autor: los créditos están en la última lámina, no los borres.
