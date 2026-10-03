@@ -1,0 +1,39 @@
+LAS CRÓNICAS DE CARLOS MENDOZA: CÓMO PONER TUS MONTAJES
+=========================================================
+
+1. Guarda tus montajes en la carpeta img/ con EXACTAMENTE estos nombres (en .jpg).
+   Si un archivo no existe, la presentación muestra el fondo de referencia.
+
+   Archivo          Lámina                        Fondo de referencia
+   ---------------  ----------------------------  ----------------------
+   portada.jpg      01 Portada                    fondo-portada.jpg
+   escena-1.jpg     06 Escenario I (portada)      fondo-templo.jpg
+   escena-1b.jpg    07 Escenario I (franja der.)  fondo-cristal.jpg
+   escena-2.jpg     08 Escenario II (portada)     fondo-hoth.jpg
+   escena-2b.jpg    09 Escenario II (franja der.) fondo-hoth.jpg
+   se-busca.jpg     10 Afiche SE BUSCA (vertical) carlos.png
+   escena-3.jpg     11 Escenario III (portada)    fondo-bespin.jpg
+   escena-3b.jpg    12 Escenario III (franja der.) fondo-bespin.jpg
+   escena-4.jpg     13 Escenario IV (portada)     fondo-tatooine.jpg
+   escena-4b.jpg    14 Escenario IV (franja der.) fondo-tatooine.jpg
+   epilogo.jpg      15 Epílogo Endor              fondo-endor.jpg
+
+   Tamaños recomendados:
+   - Portadas y epílogo: 1920 x 1080. El texto va a la IZQUIERDA, así que deja a Carlos a la derecha.
+   - Franjas "b": 620 x 1080 (vertical), con Carlos centrado.
+   - se-busca.jpg: 560 x 820 (vertical, como foto de ficha).
+
+2. Para regenerar el PDF, ejecuta en PowerShell desde esta carpeta:
+
+   & "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new --disable-gpu --no-pdf-header-footer --virtual-time-budget=15000 "--print-to-pdf=$PWD\Las Cronicas de Carlos Mendoza.pdf" "file:///$($PWD -replace '\','/')/index.html"
+
+   (Necesita internet para cargar la tipografía IBM Plex desde Google Fonts.)
+
+3. SITIO INTERACTIVO: abre index.html en Chrome o Edge y avanza con scroll o con las flechas.
+   - El índice lateral (scrollspy) marca la sección actual; haz clic en un punto para saltar.
+   - Clic en un botón de R2 [bip…] = pitidos + traducción. Clic en una cita de 3PO = la lee en voz alta.
+   - Clic en un punto de la línea de tiempo = salta al escenario. Clic en el prólogo = se repite.
+   - F = pantalla completa. Enlace directo a una lámina: index.html#l9
+   - Vista estática de una sola lámina: index.html#solo-7
+
+Créditos de los fondos: Unsplash (licencia libre). Los autores aparecen en la última lámina.

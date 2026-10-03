@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Las Crónicas de Carlos Mendoza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@300;500;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Serif:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ============ BASE ============ */
+  @page { size: 1920px 1080px; margin: 0; }
+  :root {
+    --gold: #FFE81F;
+    --ink: #F3F1EA;
+    --mute: #A9A9B3;
+    --dark: #07080C;
+    --fuerza: #5CC8FF;
+    --rebelion: #FF4D4D;
+    --nube: #FF9F5A;
+    --hutt: #E6B54A;
+    --endor: #7DDB8B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slide {
+    width: 1920px; height: 1080px;
+    position: relative; overflow: hidden;
+    background: var(--dark);
+    page-break-after: always; break-after: page;
+  }
+  @media screen { .slide { margin: 0 auto 24px; } }
+
+  .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .shade { position: absolute; inset: 0; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .cond { font-family: 'IBM Plex Sans Condensed', sans-serif; }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace; font-size: 22px; letter-spacing: .28em;
+    text-transform: uppercase; color: var(--c, var(--gold));
+  }
+  .foot {
+    position: absolute; left: 110px; right: 110px; bottom: 54px;
+    display: flex; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace; font-size: 18px; letter-spacing: .2em;
+    text-transform: uppercase; color: rgba(243,241,234,.55);
+  }
+  .foot b { color: var(--c, var(--gold)); font-weight: 500; }
+
+  /* ============ PORTADA ============ */
+  .cover .shade { background:
+      radial-gradient(ellipse at 50% 55%, rgba(0,0,0,.15) 0%, rgba(0,0,0,.75) 70%),
+      linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.85)); }
+  .cover .content {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .cover .pre { font-family:'IBM Plex Serif',serif; font-style: italic; font-weight: 300;
+    font-size: 36px; color: #6FC3FF; margin-bottom: 70px; }
+  .cover h1 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif; font-weight: 700;
+    color: transparent; -webkit-text-stroke: 3px var(--gold);
+    font-size: 150px; line-height: .92; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .cover h1 span { display:block; color: var(--gold); -webkit-text-stroke: 0; font-size: 190px; }
+  .cover .sub { margin-top: 56px; font-size: 32px; font-weight: 300; letter-spacing: .06em; color: var(--ink); }
+  .cover .sub em { color: var(--gold); font-style: normal; font-weight: 500; }
+
+  /* ============ CRAWL ============ */
+  .crawl .shade { background: linear-gradient(180deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.6) 100%); }
+  .crawl .stage { position: absolute; inset: 0; perspective: 900px; perspective-origin: 50% 0%; }
+  .crawl .text {
+    position: absolute; left: 50%; top: 70px; width: 1120px; margin-left: -560px;
+    transform-origin: 50% 0%; transform: rotateX(24deg);
+    color: var(--gold); text-align: justify;
+    font-family: 'IBM Plex Sans Condensed', sans-serif; font-weight: 500;
+    font-size: 37px; line-height: 1.36;
+  }
+  .crawl .text .ep { text-align: center; font-size: 42px; letter-spacing: .18em; }
+  .crawl .text h2 { text-align: center; font-size: 72px; font-weight: 700; letter-spacing: .06em;
+    margin: 4px 0 34px; text-transform: uppercase; }
+  .crawl .text p { margin-bottom: 26px; }
+  .crawl .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 120px;
+    background: linear-gradient(180deg, transparent, #000); }
+
+  /* ============ EXPEDIENTE ============ */
+  .file .shade { background: linear-gradient(90deg, rgba(5,6,10,.97) 0%, rgba(5,6,10,.88) 55%, rgba(5,6,10,.55) 100%); }
+  .file .wrap { position: absolute; left: 110px; top: 110px; right: 110px; bottom: 140px; display: grid;
+    grid-template-columns: 560px 1fr; gap: 90px; }
+  .photo-card {
+    position: relative; border: 2px solid var(--gold); padding: 18px; background: rgba(0,0,0,.4);
+    align-self: start;
+  }
+  .photo-card .ph { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center;
+    filter: contrast(1.05) saturate(.9); }
+  .photo-card .tag { display:flex; justify-content: space-between; margin-top: 16px;
+    font-family:'IBM Plex Mono',monospace; font-size: 19px; letter-spacing:.12em; color: var(--gold); }
+  .photo-card .corner { position:absolute; width: 34px; height: 34px; border-color: var(--gold); border-style: solid; }
+  .photo-card .c1 { top:-12px; left:-12px; border-width: 5px 0 0 5px; }
+  .photo-card .c2 { bottom:-12px; right:-12px; border-width: 0 5px 5px 0; }
+  .file h2 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight: 700; font-size: 110px;
+    line-height: .95; text-transform: uppercase; margin: 22px 0 10px; }
+  .file .role { font-size: 34px; font-weight: 300; color: var(--gold); margin-bottom: 46px; }
+  .rows { display: grid; grid-template-columns: 300px 1fr; row-gap: 22px; column-gap: 30px;
+    border-top: 1px solid rgba(255,232,31,.35); padding-top: 34px; }
+  .rows dt { font-family:'IBM Plex Mono',monospace; font-size: 20px; letter-spacing:.14em;
+    text-transform: uppercase; color: var(--mute); padding-top: 6px; }
+  .rows dd { font-size: 29px; line-height: 1.35; }
+  .stamp {
+    position: absolute; right: 120px; bottom: 120px; transform: rotate(-9deg);
+    border: 5px solid var(--rebelion); color: var(--rebelion); padding: 14px 30px;
+    font-family:'IBM Plex Mono',monospace; font-weight: 600; font-size: 30px; letter-spacing: .16em;
+    text-transform: uppercase; opacity: .9;
+  }
+
+  /* ============ ELENCO ============ */
+  .cast .shade { background: linear-gradient(180deg, rgba(4,5,9,.8), rgba(4,5,9,.95)); }
+  .cast .head { position: absolute; left: 110px; top: 100px; }
+  .cast h2, .timeline h2, .credits h2 {
+    font-family:'IBM Plex Sans Condensed',sans-serif; font-weight:700; font-size: 96px;
+    text-transform: uppercase; line-height: 1; margin-top: 18px; }
+  .cast .cards { position: absolute; left: 110px; right: 110px; top: 320px; display: grid;
+    grid-template-columns: repeat(3, 1fr); gap: 50px; }
+  .card { border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.04);
+    padding: 40px 44px 44px; height: 580px; position: relative; }
+  .card .ico { height: 150px; display:flex; align-items:flex-end; margin-bottom: 26px; }
+  .card h3 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight:700; font-size: 50px;
+    text-transform: uppercase; color: var(--c); }
+  .card .type { font-family:'IBM Plex Mono',monospace; font-size: 19px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--mute); margin: 8px 0 24px; }
+  .card p { font-size: 25px; line-height: 1.45; font-weight: 300; }
+  .card.hero { border-color: var(--gold); background: rgba(255,232,31,.06); }
+
+  /* ============ LÍNEA DE TIEMPO ============ */
+  .timeline .shade { background: linear-gradient(180deg, rgba(3,4,8,.55), rgba(3,4,8,.92)); }
+  .timeline .head { position: absolute; left: 110px; top: 100px; }
+  .tl { position: absolute; left: 110px; right: 110px; top: 560px; height: 4px;
+    background: linear-gradient(90deg, rgba(255,255,255,.15), rgba(255,255,255,.45), rgba(255,255,255,.15)); }
+  .node { position: absolute; top: -18px; width: 260px; margin-left: -130px; text-align: center; }
+  .node .dot { width: 40px; height: 40px; border-radius: 50%; margin: 0 auto;
+    background: var(--c); box-shadow: 0 0 30px var(--c); }
+  .node.canon .dot { background: #0b0c12; border: 4px solid rgba(255,255,255,.6); box-shadow: none; }
+  .node .when { font-family:'IBM Plex Mono',monospace; font-size: 20px; letter-spacing: .14em;
+    color: var(--mute); position: absolute; left: 0; right: 0; top: -60px; }
+  .node .what { margin-top: 30px; }
+  .node .what b { display:block; font-family:'IBM Plex Sans Condensed',sans-serif; font-size: 34px;
+    text-transform: uppercase; color: var(--c); line-height: 1.05; }
+  .node .what span { display:block; font-size: 22px; font-weight: 300; margin-top: 10px; line-height: 1.35; }
+  .node.canon .what b { color: rgba(255,255,255,.75); }
+  .legend { position: absolute; left: 110px; bottom: 120px; display: flex; gap: 60px;
+    font-family:'IBM Plex Mono',monospace; font-size: 20px; letter-spacing: .1em; color: var(--mute); }
+  .legend i { display:inline-block; width: 18px; height: 18px; border-radius: 50%; margin-right: 12px; vertical-align: -2px; }
+
+  /* ============ PORTADA DE ESCENARIO ============ */
+  .s1 { --c: var(--fuerza); } .s2 { --c: var(--rebelion); }
+  .s3 { --c: var(--nube); }   .s4 { --c: var(--hutt); } .s5 { --c: var(--endor); }
+  .chapter .shade { background:
+      linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 42%, rgba(0,0,0,0) 72%),
+      linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,0) 40%); }
+  .chapter .num { position: absolute; left: 100px; top: 70px;
+    font-family:'IBM Plex Sans Condensed',sans-serif; font-weight: 700; font-size: 260px; line-height: 1;
+    color: transparent; -webkit-text-stroke: 3px var(--c); opacity: .55; }
+  .chapter .txt { position: absolute; left: 110px; bottom: 170px; width: 1000px; }
+  .chapter .txt .bar { width: 120px; height: 6px; background: var(--c); margin: 28px 0 34px; }
+  .chapter h2 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight: 700; font-size: 128px;
+    line-height: .92; text-transform: uppercase; }
+  .chapter .hook { font-size: 34px; font-weight: 300; line-height: 1.4; color: rgba(243,241,234,.92); }
+  .chapter .meta { position: absolute; right: 110px; top: 110px; text-align: right;
+    font-family:'IBM Plex Mono',monospace; font-size: 21px; letter-spacing: .16em; text-transform: uppercase; line-height: 1.8;
+    text-shadow: 0 2px 14px rgba(0,0,0,.95), 0 0 4px rgba(0,0,0,.8); }
+  .chapter .meta b { color: var(--c); font-weight: 500; }
+
+  /* ============ HISTORIA DE ESCENARIO ============ */
+  .story .side { position: absolute; top: 0; right: 0; bottom: 0; width: 620px;
+    background-size: cover; background-position: center; }
+  .story .side::after { content:''; position:absolute; inset:0;
+    background: linear-gradient(90deg, var(--dark) 0%, rgba(7,8,12,0) 35%); }
+  .story .main { position: absolute; left: 110px; top: 0; bottom: 0; width: 1150px; display:flex; flex-direction:column; justify-content:center; }
+  .story h3 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight:700; font-size: 70px;
+    text-transform: uppercase; line-height: 1; margin: 16px 0 34px; }
+  .story .lead { font-size: 28px; line-height: 1.5; font-weight: 300; margin-bottom: 30px; }
+  .story .lead strong { font-weight: 600; color: var(--c); }
+  .story .key { border-left: 6px solid var(--c); padding: 6px 0 6px 30px; margin-bottom: 34px; }
+  .story .key .lbl, .box .lbl { font-family:'IBM Plex Mono',monospace; font-size: 18px; letter-spacing:.2em;
+    text-transform: uppercase; color: var(--c); margin-bottom: 10px; }
+  .story .key p { font-size: 27px; line-height: 1.48; }
+  .quote { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+    padding: 26px 34px; display: grid; grid-template-columns: 76px 1fr; gap: 24px; align-items: center; }
+  .quote p { font-family:'IBM Plex Serif',serif; font-style: italic; font-size: 28px; line-height: 1.42; }
+  .quote small { display:block; margin-top: 10px; font-family:'IBM Plex Mono',monospace; font-style: normal;
+    font-size: 17px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+  .r2 { margin-top: 18px; font-family:'IBM Plex Mono',monospace; font-size: 21px; color: #8FB7FF; }
+  .r2 b { color: #fff; font-weight: 500; }
+  .story .right { position: absolute; right: 70px; top: 0; bottom: 0; justify-content: center; width: 470px; z-index: 2; display:flex; flex-direction:column; gap: 26px; }
+  .box { background: rgba(7,8,12,.84); border: 1px solid rgba(255,255,255,.16); padding: 28px 30px;
+    backdrop-filter: blur(4px); }
+  .stat { display:flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    border-bottom: 1px dashed rgba(255,255,255,.16); padding: 12px 0; }
+  .stat:last-child { border-bottom: 0; }
+  .stat span { font-size: 21px; color: var(--mute); line-height: 1.3; }
+  .stat b { font-family:'IBM Plex Mono',monospace; font-weight: 600; font-size: 24px; color: #fff; text-align: right; white-space: nowrap; }
+  .canon li { list-style: none; font-size: 21px; line-height: 1.4; padding: 8px 0 8px 36px; position: relative; }
+  .canon li::before { content: '✓'; position: absolute; left: 0; top: 7px; color: var(--c);
+    font-family:'IBM Plex Mono',monospace; font-weight: 600; }
+
+  /* ============ SE BUSCA ============ */
+  .wanted { background: #14100c; }
+  .wanted .shade { background: radial-gradient(ellipse at 50% 40%, rgba(40,10,10,.55), rgba(0,0,0,.92)); }
+  .poster { position: absolute; left: 50%; top: 70px; width: 1500px; margin-left: -750px; bottom: 70px;
+    border: 3px solid rgba(255,77,77,.8); background: rgba(10,8,8,.82); display: grid;
+    grid-template-columns: 560px 1fr; gap: 64px; padding: 56px; }
+  .poster .ph { background-size: cover; background-position: center; filter: grayscale(1) contrast(1.25) brightness(.95);
+    border: 2px solid rgba(255,255,255,.3); position: relative; }
+  .poster .ph::after { content:''; position:absolute; inset:0;
+    background: repeating-linear-gradient(0deg, rgba(255,0,0,.07) 0 2px, transparent 2px 5px); }
+  .poster .ph .id { position:absolute; left:0; right:0; bottom:0; padding: 14px 18px; background: rgba(200,20,20,.88);
+    font-family:'IBM Plex Mono',monospace; font-size: 20px; letter-spacing: .16em; z-index: 2; }
+  .poster h2 { font-family:"IBM Plex Sans Condensed",sans-serif; font-weight:700; font-size: 132px; line-height: .9;
+    color: var(--rebelion); letter-spacing: .02em; }
+  .poster .by { font-family:'IBM Plex Mono',monospace; font-size: 22px; letter-spacing: .24em; color: var(--mute);
+    text-transform: uppercase; margin: 14px 0 30px; }
+  .poster .name { font-family:"IBM Plex Sans Condensed",sans-serif; font-weight: 700; font-size: 60px; text-transform: uppercase; }
+  .poster .alias { font-size: 26px; color: var(--mute); margin: 4px 0 26px; font-style: italic; font-weight: 300; }
+  .poster dl { display: grid; grid-template-columns: 220px 1fr; row-gap: 18px; column-gap: 24px; }
+  .poster dt { font-family:'IBM Plex Mono',monospace; font-size: 18px; letter-spacing: .16em; text-transform: uppercase; color: var(--rebelion); padding-top: 6px; }
+  .poster dd { font-size: 23px; line-height: 1.36; }
+  .poster .reward { margin-top: 28px; padding-top: 22px; border-top: 2px solid rgba(255,77,77,.6);
+    display:flex; justify-content: space-between; align-items: baseline; }
+  .poster .reward b { font-family:"IBM Plex Mono",monospace; font-size: 48px; color: var(--gold); }
+  .poster .reward span { font-size: 22px; color: var(--mute); max-width: 420px; text-align: right; line-height: 1.35; }
+
+  /* ============ EPÍLOGO ============ */
+  .epilogue .shade { background: linear-gradient(0deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.25) 100%); }
+  .epilogue .txt { position: absolute; left: 110px; right: 110px; bottom: 150px; }
+  .epilogue h2 { font-family:'IBM Plex Sans Condensed',sans-serif; font-weight:700; font-size: 120px; text-transform: uppercase; line-height: .95; margin: 18px 0 30px; }
+  .epilogue .cols { display:grid; grid-template-columns: 1fr 760px; gap: 80px; align-items: end; }
+  .epilogue p.lead { font-size: 30px; line-height: 1.5; font-weight: 300; }
+
+  /* ============ CRÉDITOS ============ */
+  .credits .shade { background: rgba(0,0,0,.82); }
+  .credits .center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+  .credits h2 { color: var(--gold); font-size: 200px; letter-spacing: .08em; }
+  .credits .line { font-family:'IBM Plex Serif',serif; font-style: italic; font-size: 38px; font-weight: 300; margin: 24px 0 90px; }
+  .credits .small { font-family:'IBM Plex Mono',monospace; font-size: 18px; letter-spacing: .08em; color: var(--mute); line-height: 1.9; max-width: 1400px; }
+
+  /* ============ R2: línea traducible ============ */
+  .r2 .beep { all: unset; color: #fff; font-weight: 500; font-family: inherit; }
+
+  /* ============ SITIO INTERACTIVO (solo pantalla; el PDF no cambia) ============ */
+  .spy, .progress, .hint-keys { display: none; }
+  @media screen {
+    html.js { scroll-snap-type: y proximity; scroll-behavior: smooth; background: #000; }
+    html.js .slide { zoom: var(--s, 1); margin: 0 auto; scroll-snap-align: center; }
+
+    /* Revelado al entrar en pantalla */
+    html.js .rv { opacity: 0; translate: 0 28px;
+      transition: opacity .8s ease, translate .9s cubic-bezier(.2,.7,.2,1); transition-delay: 0s; }
+    html.js .slide.inview .rv { opacity: 1; translate: 0 0; transition-delay: var(--d, 0s); }
+
+    /* Parallax de fondos al hacer scroll */
+    html.js .cover .bg, html.js .chapter .bg, html.js .epilogue .bg, html.js .crawl .bg {
+      inset: -90px 0; translate: 0 var(--py, 0px); will-change: translate; }
+    html.js .slide.inview.chapter .bg, html.js .slide.inview.epilogue .bg { animation: kb 14s ease-out both; }
+    @keyframes kb { from { scale: 1.1; } to { scale: 1; } }
+
+    /* Portada */
+    html.js .slide.inview.cover h1 { animation: titleIn 2.4s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes titleIn { from { opacity: 0; scale: 1.5; letter-spacing: .3em; filter: blur(8px); } to { opacity: 1; scale: 1; filter: blur(0); } }
+
+    /* Texto de apertura */
+    html.js .slide.inview.crawl .text { animation: crawl 15s cubic-bezier(.12,.45,.3,1) both; }
+    @keyframes crawl { from { transform: rotateX(24deg) translateY(1150px); } to { transform: rotateX(24deg) translateY(0); } }
+    html.js .crawl { cursor: pointer; }
+
+    /* Sello del expediente */
+    html.js .slide.inview .stamp { animation: slam .45s 1.3s cubic-bezier(.3,1.6,.5,1) both; }
+    @keyframes slam { from { opacity: 0; scale: 2.6; } to { opacity: .9; scale: 1; } }
+
+    /* Línea de tiempo: los puntos son botones */
+    html.js .node[data-go] { cursor: pointer; }
+    html.js .node .dot { transition: scale .25s, box-shadow .25s; }
+    html.js .node[data-go]:hover .dot { scale: 1.35; box-shadow: 0 0 50px var(--c); }
+    html.js .node[data-go]:hover .what b { text-decoration: underline; text-underline-offset: 8px; }
+    html.js .tl::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--fuerza), var(--rebelion), var(--nube), var(--hutt), var(--endor));
+      transition: width 2.4s .4s cubic-bezier(.3,.6,.2,1); }
+    html.js .slide.inview .tl::before { width: 100%; }
+
+    /* R2 traducible */
+    html.js .r2 .beep { cursor: pointer; border: 1px solid rgba(143,183,255,.55); padding: 4px 14px; border-radius: 999px;
+      transition: background .2s; }
+    html.js .r2 .beep:hover { background: rgba(143,183,255,.18); }
+    html.js .r2 .beep::after { content: '  · traducir'; color: #8FB7FF; font-weight: 400; }
+    html.js .r2.open .beep::after { content: ''; }
+    html.js .r2 .tr { opacity: 0; }
+    html.js .r2.open .tr { opacity: 1; }
+
+    /* 3PO habla */
+    html.js .quote { position: relative; cursor: pointer; transition: border-color .3s, background .3s; }
+    html.js .quote:hover { border-color: rgba(242,193,78,.6); }
+    html.js .quote::after { content: '▶ escuchar'; position: absolute; top: 12px; right: 16px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 15px; letter-spacing: .12em; color: #F2C14E; opacity: .65; }
+    html.js .quote.speaking::after { content: '■ hablando…'; opacity: 1; }
+    html.js .quote.speaking svg { animation: talk .5s ease-in-out infinite alternate; }
+    @keyframes talk { to { filter: drop-shadow(0 0 14px #F2C14E); scale: 1.08; } }
+
+    /* Afiche: color al pasar el mouse */
+    html.js .poster .ph { transition: filter .6s; }
+    html.js .poster .ph:hover { filter: none; }
+
+    /* Barra de progreso */
+    html.js .progress { display: block; position: fixed; left: 0; top: 0; height: 3px; z-index: 60;
+      width: var(--p, 0%); background: var(--hc, var(--gold)); box-shadow: 0 0 12px var(--hc, var(--gold));
+      transition: background .4s; }
+
+    /* Scrollspy lateral */
+    html.js .spy { display: flex; flex-direction: column; gap: 4px; position: fixed; right: 18px; top: 50%;
+      translate: 0 -50%; z-index: 60; font-family: 'IBM Plex Mono', monospace; }
+    .spy a { display: flex; align-items: center; justify-content: flex-end; gap: 12px; text-decoration: none;
+      color: rgba(243,241,234,.8); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 0; }
+    .spy a span { opacity: 0; translate: 8px 0; transition: opacity .25s, translate .25s; white-space: nowrap;
+      background: rgba(0,0,0,.75); padding: 3px 8px; }
+    .spy:hover a span, .spy a.on span { opacity: 1; translate: 0 0; }
+    .spy:not(:hover) a.on span { color: var(--c); }
+    .spy a i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.5);
+      transition: all .3s; flex: none; }
+    .spy a.on i { background: var(--c); border-color: var(--c); box-shadow: 0 0 10px var(--c); scale: 1.4; }
+    .spy a.seen:not(.on) i { background: rgba(255,255,255,.45); }
+    .spy hr { border: 0; height: 10px; }
+
+    html.js .hint-keys { display: block; position: fixed; left: 18px; bottom: 14px; z-index: 60;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .1em; color: rgba(243,241,234,.45);
+      transition: opacity .6s; }
+    html.js .hint-keys.gone { opacity: 0; }
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    html.js { scroll-behavior: auto; }
+    html.js .rv { transition: none; }
+    html.js .slide.inview * { animation-duration: .01s !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================================================================
+     IMÁGENES: cada escena usa capas de fondo. La PRIMERA url es tu montaje;
+     si ese archivo no existe, se ve el fondo de referencia (fondo-*.jpg).
+     Para usar tus montajes guarda los archivos en img/ con estos nombres:
+       portada.jpg  escena-1.jpg  escena-1b.jpg  escena-2.jpg  escena-2b.jpg
+       se-busca.jpg  escena-3.jpg  escena-3b.jpg  escena-4.jpg  escena-4b.jpg
+       epilogo.jpg
+     ====================================================================== -->
+
+<!-- 01 · PORTADA -->
+<section class="slide cover">
+  <div class="bg" style="background-image:url(img/portada.jpg), url(img/fondo-portada.jpg)"></div>
+  <div class="shade"></div>
+  <div class="content">
+    <div class="pre">Hace mucho tiempo, en una bodega muy, muy lejana…</div>
+    <h1>Las crónicas de<span>Carlos Mendoza</span></h1>
+    <div class="sub">Una aventura con <em>C-3PO</em> y <em>R2-D2</em> en la trilogía original</div>
+  </div>
+</section>
+
+<!-- 02 · CRAWL -->
+<section class="slide crawl">
+  <div class="bg" style="background-image:url(img/fondo-nebulosa.jpg); filter: brightness(.55)"></div>
+  <div class="shade"></div>
+  <div class="stage">
+    <div class="text">
+      <div class="ep">EPISODIO IV ½</div>
+      <h2>La ruta del Mendoza</h2>
+      <p>Es un período de guerra civil. La Alianza Rebelde ha destruido la temida Estrella de la Muerte, pero ahora enfrenta un enemigo todavía más peligroso: el desorden en sus bodegas.</p>
+      <p>Sin base fija, sin inventarios y con droides que cambian las rutas a su antojo, la Rebelión necesita a alguien capaz de llevar cada pieza a su destino, a tiempo y sin perder un solo tornillo.</p>
+      <p>Desde un rincón olvidado de la galaxia llega CARLOS MENDOZA, técnico en logística, armado solo con un manifiesto de carga, una paciencia infinita y dos droides que no dejan de discutir…</p>
+    </div>
+  </div>
+  <div class="fade"></div>
+</section>
+
+<!-- 03 · EXPEDIENTE -->
+<section class="slide file">
+  <div class="bg" style="background-image:url(img/fondo-almacen.jpg)"></div>
+  <div class="shade"></div>
+  <div class="wrap">
+    <div class="photo-card">
+      <div class="corner c1"></div><div class="corner c2"></div>
+      <div class="ph" style="background-image:url(img/carlos.png)"></div>
+      <div class="tag"><span>ID · AR-0427-CM</span><span>ACTIVO</span></div>
+    </div>
+    <div>
+      <div class="kicker">Alianza Rebelde · Expediente de personal</div>
+      <h2>Carlos<br>Mendoza</h2>
+      <div class="role">Técnico en Logística · Base de origen: Viakon</div>
+      <dl class="rows">
+        <dt>Especialidad</dt><dd>Inventarios imposibles, rutas de entrega bajo fuego enemigo y reconocer el cable correcto a tres metros de distancia.</dd>
+        <dt>Equipo</dt><dd>Mochila táctica verde olivo, gafete siempre visible y una barba reglamentaria de contrabandista.</dd>
+        <dt>Debilidad</dt><dd>No soporta un envío sin número de guía.</dd>
+        <dt>Fuerza</dt><dd>Sensibilidad en evaluación <span class="mono" style="color:var(--fuerza)">(ver escenario I)</span></dd>
+      </dl>
+    </div>
+  </div>
+  <div class="stamp">Apto para misión</div>
+</section>
+
+<!-- 04 · ELENCO -->
+<section class="slide cast">
+  <div class="bg" style="background-image:url(img/fondo-portada.jpg)"></div>
+  <div class="shade"></div>
+  <div class="head">
+    <div class="kicker">El equipo</div>
+    <h2>Un humano, dos droides, cero calma</h2>
+  </div>
+  <div class="cards">
+    <div class="card hero" style="--c:var(--gold)">
+      <div class="ico">
+        <svg width="150" height="160" viewBox="0 0 150 160" fill="none" stroke="#FFE81F" stroke-width="5">
+          <rect x="22" y="58" width="106" height="92" rx="6"/>
+          <path d="M22 58 L48 26 H102 L128 58"/>
+          <path d="M75 58 V150 M48 26 L75 58 L102 26"/>
+          <rect x="40" y="92" width="32" height="22" rx="2"/>
+          <path d="M46 100 H66 M46 107 H60" stroke-width="3"/>
+        </svg>
+      </div>
+      <h3>Carlos Mendoza</h3>
+      <div class="type">Humano · Técnico en logística</div>
+      <p>El único en la galaxia que firma de recibido en medio de una batalla. Su arma es una tabla con el manifiesto de carga y su escudo, la paciencia.</p>
+    </div>
+    <div class="card" style="--c:#F2C14E">
+      <div class="ico">
+        <svg width="150" height="160" viewBox="0 0 150 160" fill="none" stroke="#F2C14E" stroke-width="5">
+          <path d="M40 70 C40 30 110 30 110 70 V112 C110 132 40 132 40 112 Z"/>
+          <circle cx="60" cy="78" r="10" fill="#F2C14E"/><circle cx="90" cy="78" r="10" fill="#F2C14E"/>
+          <path d="M62 104 H88 M66 112 H84" stroke-width="3"/>
+          <path d="M40 72 H110" stroke-width="3"/>
+          <path d="M60 132 L56 156 M90 132 L94 156"/>
+        </svg>
+      </div>
+      <h3>C-3PO</h3>
+      <div class="type">Droide de protocolo</div>
+      <p>Domina más de seis millones de formas de comunicación. Ninguna incluye la palabra «tranquilo». Calcula probabilidades que nadie le pidió.</p>
+    </div>
+    <div class="card" style="--c:#6FA8FF">
+      <div class="ico">
+        <svg width="150" height="160" viewBox="0 0 150 160" fill="none" stroke="#6FA8FF" stroke-width="5">
+          <path d="M35 62 A40 40 0 0 1 115 62 Z"/>
+          <circle cx="75" cy="44" r="8" fill="#6FA8FF"/>
+          <rect x="35" y="62" width="80" height="78" rx="4"/>
+          <rect x="52" y="78" width="46" height="14" fill="#6FA8FF" stroke="none"/>
+          <path d="M52 104 H98 M52 116 H82" stroke-width="3"/>
+          <path d="M28 70 L18 150 H38 M122 70 L132 150 H112"/>
+        </svg>
+      </div>
+      <h3>R2-D2</h3>
+      <div class="type">Droide astromecánico</div>
+      <p>Nunca le borraron la memoria. Cambia de ruta sin avisar, lo que lo convierte en el archienemigo natural de cualquier técnico en logística.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · LÍNEA DE TIEMPO -->
+<section class="slide timeline">
+  <div class="bg" style="background-image:url(img/fondo-nebulosa.jpg)"></div>
+  <div class="shade"></div>
+  <div class="head">
+    <div class="kicker">Encaje en el canon</div>
+    <h2>Donde la cámara no estaba mirando</h2>
+  </div>
+  <div class="tl">
+    <div class="node canon" style="left:0%"><div class="when">0 DBY</div><div class="dot"></div>
+      <div class="what"><b>Episodio IV</b><span>Cae la Estrella de la Muerte</span></div></div>
+    <div class="node" style="left:20%; --c:var(--fuerza)"><div class="when">1 DBY</div><div class="dot"></div>
+      <div class="what"><b>I · La Fuerza</b><span>Ruinas Jedi en Vhar-Telos</span></div></div>
+    <div class="node" style="left:40%; --c:var(--rebelion)"><div class="when">3 DBY</div><div class="dot"></div>
+      <div class="what"><b>II · Rebelión</b><span>Base Eco, Hoth<br>(Episodio V)</span></div></div>
+    <div class="node" style="left:60%; --c:var(--nube)"><div class="when">3 DBY</div><div class="dot"></div>
+      <div class="what"><b>III · Ocupación</b><span>Ciudad Nube, Bespin<br>(Episodio V)</span></div></div>
+    <div class="node" style="left:80%; --c:var(--hutt)"><div class="when">4 DBY</div><div class="dot"></div>
+      <div class="what"><b>IV · Bajos fondos</b><span>Palacio de Jabba<br>(Episodio VI)</span></div></div>
+    <div class="node" style="left:100%; --c:var(--endor)"><div class="when">4 DBY</div><div class="dot"></div>
+      <div class="what"><b>Epílogo</b><span>La fiesta en Endor</span></div></div>
+  </div>
+  <div class="legend">
+    <span><i style="border:3px solid rgba(255,255,255,.6)"></i>Canon de las películas</span>
+    <span><i style="background:var(--gold)"></i>Aventuras de Carlos (entre escenas)</span>
+    <span>DBY = Después de la Batalla de Yavin</span>
+  </div>
+</section>
+
+<!-- 06 · ESCENARIO I · PORTADA -->
+<section class="slide chapter s1">
+  <div class="bg" style="background-image:url(img/escena-1.jpg), url(img/fondo-templo.jpg)"></div>
+  <div class="shade"></div>
+  <div class="num">I</div>
+  <div class="meta"><b>La Fuerza</b><br>Luna de Vhar-Telos<br>1 DBY</div>
+  <div class="txt">
+    <div class="kicker">Escenario I · El llamado</div>
+    <div class="bar"></div>
+    <h2>El eco que R2 recordaba</h2>
+    <p class="hook" style="margin-top:30px">Una entrega de rutina. Un droide que se desvía sin permiso. Un templo que lleva mil años esperando a alguien… con el gafete puesto.</p>
+  </div>
+</section>
+
+<!-- 07 · ESCENARIO I · HISTORIA -->
+<section class="slide story s1">
+  <div class="side" style="background-image:url(img/escena-1b.jpg), url(img/escena-1.jpg), url(img/fondo-cristal.jpg)"></div>
+  <div class="main">
+    <div class="kicker">Escenario I · La Fuerza</div>
+    <h3>La desviación más importante de su carrera</h3>
+    <p class="lead">La Alianza envía a Carlos a buscar mundos para una base nueva. A mitad del viaje, <strong>R2-D2 cambia las coordenadas sin autorización</strong> y los lleva a una luna que no aparece en ningún mapa. Bajo la niebla hay un antiguo puesto Jedi.</p>
+    <div class="key">
+      <div class="lbl">Momento clave</div>
+      <p>En la cámara central, Carlos toca un cristal y tiene una visión: <b>nieve infinita, una ciudad entre nubes y un palacio en el desierto</b>. No entiende nada, pero lo anota todo en su manifiesto, por si acaso.</p>
+    </div>
+    <div class="quote">
+      <svg width="64" height="64" viewBox="0 0 150 150" fill="none" stroke="#F2C14E" stroke-width="7"><path d="M40 60 C40 20 110 20 110 60 V102 C110 122 40 122 40 102 Z"/><circle cx="60" cy="68" r="10" fill="#F2C14E"/><circle cx="90" cy="68" r="10" fill="#F2C14E"/></svg>
+      <p>«¡R2! El señor Mendoza tenía un itinerario aprobado. Desviarnos a una luna sin registrar es, francamente, una falta de respeto a la logística.»<small>C-3PO</small></p>
+    </div>
+    <div class="r2">R2-D2: <button class="beep" type="button">[bip-bup-biiiip]</button> <span class="tr">→ «Confíen en mí. Yo ya estuve aquí».</span></div>
+  </div>
+  <div class="right">
+    <div class="box">
+      <div class="lbl">Reporte de logística</div>
+      <div class="stat"><span>Desvío de ruta</span><b>3 sistemas</b></div>
+      <div class="stat"><span>Carga recuperada</span><b>1 cristal</b></div>
+      <div class="stat"><span>Factura del cristal</span><b>Ninguna</b></div>
+      <div class="stat"><span>Éxito según 3PO</span><b>Bajísimo</b></div>
+    </div>
+    <div class="box">
+      <div class="lbl">Encaje en el canon</div>
+      <ul class="canon">
+        <li>A R2 nunca le borraron la memoria y a 3PO sí: por eso solo R2 «recuerda».</li>
+        <li>Carlos siente la Fuerza una vez, pero no es Jedi. Luke sigue sin maestro hasta Dagobah.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · ESCENARIO II · PORTADA -->
+<section class="slide chapter s2">
+  <div class="bg" style="background-image:url(img/escena-2.jpg), url(img/fondo-hoth.jpg)"></div>
+  <div class="shade"></div>
+  <div class="num">II</div>
+  <div class="meta"><b>La Rebelión</b><br>Base Eco · Hoth<br>3 DBY · Episodio V</div>
+  <div class="txt">
+    <div class="kicker">Escenario II · El soldado común</div>
+    <div class="bar"></div>
+    <h2>Base Eco</h2>
+    <p class="hook" style="margin-top:30px">Sesenta grados bajo cero, un escudo que no puede apagarse y un inventario con cero calefactores. Era su visión de la nieve y llegó antes de lo esperado.</p>
+  </div>
+</section>
+
+<!-- 09 · ESCENARIO II · HISTORIA -->
+<section class="slide story s2">
+  <div class="side" style="background-image:url(img/escena-2b.jpg), url(img/escena-2.jpg), url(img/fondo-hoth.jpg)"></div>
+  <div class="main">
+    <div class="kicker">Escenario II · La Rebelión</div>
+    <h3>El hombre que no apagó el escáner</h3>
+    <p class="lead">Carlos administra los suministros de la Base Eco. La noche en que Luke y Han no regresan de la tormenta, <strong>se queda en la puerta del hangar con R2 y 3PO</strong>, con el escáner encendido en la frecuencia de Luke, mientras 3PO recita probabilidades cada vez peores.</p>
+    <div class="key">
+      <div class="lbl">Momento clave</div>
+      <p>Llega el ataque imperial. Una línea de energía del generador del escudo se quema y Carlos la reemplaza con un rollo de cable que trajo «por si acaso» en su mochila. El escudo aguanta los minutos que los transportes necesitan para escapar.</p>
+    </div>
+    <div class="quote">
+      <svg width="64" height="64" viewBox="0 0 150 150" fill="none" stroke="#F2C14E" stroke-width="7"><path d="M40 60 C40 20 110 20 110 60 V102 C110 122 40 122 40 102 Z"/><circle cx="60" cy="68" r="10" fill="#F2C14E"/><circle cx="90" cy="68" r="10" fill="#F2C14E"/></svg>
+      <p>«Señor Mendoza, las probabilidades de que ese cable resista son de una en cuatro mil». «Entonces cuéntame entre las cuatro mil y una, 3PO».<small>C-3PO y Carlos</small></p>
+    </div>
+    <div class="r2">R2-D2: <button class="beep" type="button">[silbido largo]</button> <span class="tr">→ «Ese cable es mejor que el original».</span></div>
+  </div>
+  <div class="right">
+    <div class="box">
+      <div class="lbl">Reporte de logística</div>
+      <div class="stat"><span>Temperatura</span><b>−60 °C</b></div>
+      <div class="stat"><span>Calefactores en stock</span><b>0</b></div>
+      <div class="stat"><span>Tauntauns</span><b>Demasiados</b></div>
+      <div class="stat"><span>Cable de emergencia</span><b>1 rollo</b></div>
+    </div>
+    <div class="box">
+      <div class="lbl">Encaje en el canon</div>
+      <ul class="canon">
+        <li>3PO sale de Hoth en el Halcón con Han y Leia, igual que en la película.</li>
+        <li>El transporte de Carlos recibe un impacto y termina varado… en Bespin.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · SE BUSCA -->
+<section class="slide wanted">
+  <div class="bg" style="background-image:url(img/fondo-hoth.jpg); filter: grayscale(1) brightness(.4)"></div>
+  <div class="shade"></div>
+  <div class="poster">
+    <div class="ph" style="background-image:url(img/se-busca.jpg), url(img/carlos.png)">
+      <div class="id">ORDEN IMPERIAL · DBY-3-0427</div>
+    </div>
+    <div>
+      <h2>SE BUSCA</h2>
+      <div class="by">Por orden del Imperio Galáctico</div>
+      <div class="name">Carlos Mendoza</div>
+      <div class="alias">Alias: «El de la mochila», «El del manifiesto»</div>
+      <dl>
+        <dt>Delitos</dt><dd>Optimizar las rutas de suministro rebeldes. Mantener encendido un escudo planetario con cable no autorizado.</dd>
+        <dt>Señas</dt><dd>Barba tupida, mirada de «¿y la guía de remisión?». Siempre lleva gafete.</dd>
+        <dt>Advertencia</dt><dd>Si lo encuentra, NO le pida que revise su almacén. Lo reorganizará.</dd>
+      </dl>
+      <div class="reward">
+        <b>15 000 cr.</b>
+        <span>o un cargamento completo de cable de cobre</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · ESCENARIO III · PORTADA -->
+<section class="slide chapter s3">
+  <div class="bg" style="background-image:url(img/escena-3.jpg), url(img/fondo-bespin.jpg)"></div>
+  <div class="shade"></div>
+  <div class="num">III</div>
+  <div class="meta"><b>Bajo la ocupación</b><br>Ciudad Nube · Bespin<br>3 DBY · Episodio V</div>
+  <div class="txt">
+    <div class="kicker">Escenario III · El ciudadano atrapado</div>
+    <div class="bar"></div>
+    <h2>La ciudad en las nubes</h2>
+    <p class="hook" style="margin-top:30px">Un refugiado en la planta de reciclaje. Un droide dorado hecho pedazos sobre la banda transportadora. Y el Imperio cenando en el piso de arriba.</p>
+  </div>
+</section>
+
+<!-- 12 · ESCENARIO III · HISTORIA -->
+<section class="slide story s3">
+  <div class="side" style="background-image:url(img/escena-3b.jpg), url(img/escena-3.jpg), url(img/fondo-bespin.jpg)"></div>
+  <div class="main">
+    <div class="kicker">Escenario III · Ciudad Nube</div>
+    <h3>Pieza que entra, pieza que se registra</h3>
+    <p class="lead">Carlos trabaja entre ugnaughts y chatarra en la planta de procesamiento. Cuando las piezas de un droide de protocolo llegan a la banda que va al horno, <strong>las registra en el inventario y las separa</strong> en una caja con una etiqueta: «FRÁGIL · NO INCINERAR».</p>
+    <div class="key">
+      <div class="lbl">Momento clave</div>
+      <p>Durante la huida, R2 necesita saber por qué el hiperimpulsor del Halcón no funciona. Carlos conoce el sistema de la ciudad como si fuera su bodega y <b>lo lleva a la terminal correcta</b>. En la película solo se ve que R2 «lo averigua», y esta es la explicación.</p>
+    </div>
+    <div class="quote">
+      <svg width="64" height="64" viewBox="0 0 150 150" fill="none" stroke="#F2C14E" stroke-width="7"><path d="M40 60 C40 20 110 20 110 60 V102 C110 122 40 122 40 102 Z"/><circle cx="60" cy="68" r="10" fill="#F2C14E"/><circle cx="90" cy="68" r="10" fill="#F2C14E"/></svg>
+      <p>«¡Señor Mendoza! Jamás pensé que me alegraría tanto ver a alguien con un portapapeles».<small>C-3PO (solo la cabeza, dentro de una caja)</small></p>
+    </div>
+    <div class="r2">R2-D2: <button class="beep" type="button">[bip triunfal]</button> <span class="tr">→ «Código de acceso recibido. Gracias, humano de la bodega».</span></div>
+  </div>
+  <div class="right">
+    <div class="box">
+      <div class="lbl">Reporte de logística</div>
+      <div class="stat"><span>Piezas de 3PO registradas</span><b>100 %</b></div>
+      <div class="stat"><span>Piezas al horno</span><b>0</b></div>
+      <div class="stat"><span>Tiempo en la terminal</span><b>90 s</b></div>
+      <div class="stat"><span>Nuevo contacto</span><b>L. Calrissian</b></div>
+    </div>
+    <div class="box">
+      <div class="lbl">Encaje en el canon</div>
+      <ul class="canon">
+        <li>Chewbacca sigue siendo quien rescata y arma a 3PO. Carlos solo «guardó las piezas».</li>
+        <li>En la evacuación conoce a Lando y se une a su plan para rescatar a Han.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · ESCENARIO IV · PORTADA -->
+<section class="slide chapter s4">
+  <div class="bg" style="background-image:url(img/escena-4.jpg), url(img/fondo-tatooine.jpg)"></div>
+  <div class="shade"></div>
+  <div class="num">IV</div>
+  <div class="meta"><b>Los bajos fondos</b><br>Palacio de Jabba · Tatooine<br>4 DBY · Episodio VI</div>
+  <div class="txt">
+    <div class="kicker">Escenario IV · El golpe</div>
+    <div class="bar"></div>
+    <h2>El precio del Hutt</h2>
+    <p class="hook" style="margin-top:30px">Lando entra disfrazado de guardia. Carlos entra disfrazado de cocinero. Ninguno de los dos sabe cocinar.</p>
+  </div>
+</section>
+
+<!-- 14 · ESCENARIO IV · HISTORIA -->
+<section class="slide story s4">
+  <div class="side" style="background-image:url(img/escena-4b.jpg), url(img/escena-4.jpg), url(img/fondo-tatooine.jpg)"></div>
+  <div class="main">
+    <div class="kicker">Escenario IV · Bajos fondos</div>
+    <h3>Un barril derramado a tiempo</h3>
+    <p class="lead">En el palacio, Carlos se reencuentra con <strong>3PO, ahora intérprete de Jabba</strong>, y con R2, que sirve tragos. Dentro de R2 va escondido el sable de luz de Luke, y todo el plan depende de que nadie lo revise.</p>
+    <div class="key">
+      <div class="lbl">Momento clave</div>
+      <p>Un guardia gamorreano empieza a sospechar del compartimiento de R2. Carlos «tropieza» y derrama un barril entero de bebida a sus pies. En la barcaza, durante el caos, cae a la arena con los dos droides y <b>el imán del esquife los rescata a los tres</b>.</p>
+    </div>
+    <div class="quote">
+      <svg width="64" height="64" viewBox="0 0 150 150" fill="none" stroke="#F2C14E" stroke-width="7"><path d="M40 60 C40 20 110 20 110 60 V102 C110 122 40 122 40 102 Z"/><circle cx="60" cy="68" r="10" fill="#F2C14E"/><circle cx="90" cy="68" r="10" fill="#F2C14E"/></svg>
+      <p>«Su Excelencia, el gran Jabba, quiere saber por qué el cocinero nuevo lleva una mochila táctica… y un inventario de la despensa».<small>C-3PO, sudando aceite</small></p>
+    </div>
+    <div class="r2">R2-D2: <button class="beep" type="button">[bip nervioso]</button> <span class="tr">→ «No mires mi compartimiento. No mires mi compartimiento».</span></div>
+  </div>
+  <div class="right">
+    <div class="box">
+      <div class="lbl">Reporte de logística</div>
+      <div class="stat"><span>Barriles derramados</span><b>1 (a propósito)</b></div>
+      <div class="stat"><span>Sables de contrabando</span><b>1</b></div>
+      <div class="stat"><span>Sarlaccs evitados</span><b>1</b></div>
+      <div class="stat"><span>Platillos aprobados</span><b>0</b></div>
+    </div>
+    <div class="box">
+      <div class="lbl">Encaje en el canon</div>
+      <ul class="canon">
+        <li>Lando sí se infiltró como guardia de Jabba. Carlos solo agranda el equipo.</li>
+        <li>R2 lanza el sable a Luke desde la barcaza, igual que en la película.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · EPÍLOGO -->
+<section class="slide epilogue s5">
+  <div class="bg" style="background-image:url(img/epilogo.jpg), url(img/fondo-endor.jpg)"></div>
+  <div class="shade"></div>
+  <div class="txt">
+    <div class="kicker">Epílogo · Endor · 4 DBY</div>
+    <h2>Al fondo de la fiesta</h2>
+    <div class="cols">
+      <p class="lead">El Imperio cae. Bajo los árboles de Endor hay tambores, fogatas y ewoks bailando. Si miras con atención el fondo de la celebración, verás a un hombre con barba y mochila verde contando a los invitados. Por costumbre.</p>
+      <div class="quote" style="background:rgba(0,0,0,.55)">
+        <svg width="64" height="64" viewBox="0 0 150 150" fill="none" stroke="#F2C14E" stroke-width="7"><path d="M40 60 C40 20 110 20 110 60 V102 C110 122 40 122 40 102 Z"/><circle cx="60" cy="68" r="10" fill="#F2C14E"/><circle cx="90" cy="68" r="10" fill="#F2C14E"/></svg>
+        <p>«Debo decir, señor Mendoza, que en mis seis millones de formas de comunicación no existe una palabra para alguien como usted».<small>C-3PO</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · CRÉDITOS -->
+<section class="slide credits">
+  <div class="bg" style="background-image:url(img/fondo-portada.jpg)"></div>
+  <div class="shade"></div>
+  <div class="center">
+    <h2>FIN</h2>
+    <div class="line">Que la logística te acompañe, Carlos.</div>
+    <div class="small">
+      Fondos: fotografías de Unsplash por Олег Мороз, Steve Busch, Luca Pistollato, Fred Durana, Tomasz Kotarski,<br>
+      Benjamin Keeler, Nikola Ancevski, Gopal Krishna y Venti Views.<br>
+      Historia de fan sin fines de lucro. Star Wars, C-3PO y R2-D2 son propiedad de Lucasfilm Ltd.
+    </div>
+  </div>
+</section>
+
+<div class="progress"></div>
+<nav class="spy" aria-label="Índice"></nav>
+<div class="hint-keys">↓ scroll o flechas para avanzar</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+
+  // Vista estática de una sola lámina (para revisar): presentacion.html#solo-7
+  var solo = /^#solo-(\d+)$/.exec(location.hash);
+  if (solo) {
+    slides.forEach(function (s, i) { if (i !== solo[1] - 1) s.style.display = 'none'; else s.style.margin = '0'; });
+    return;
+  }
+  root.classList.add('js');
+
+  var titles = ['Portada', 'Prólogo', 'Expediente', 'El equipo', 'Línea de tiempo',
+    'I · La Fuerza', 'I · La desviación', 'II · Base Eco', 'II · El escáner', 'Se busca',
+    'III · Ciudad Nube', 'III · El inventario', 'IV · El precio del Hutt', 'IV · El barril',
+    'Epílogo · Endor', 'Fin'];
+  var groups = [0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5];   // separadores del índice
+  var color = function (s) { return getComputedStyle(s).getPropertyValue('--c').trim() || '#FFE81F'; };
+
+  // ---------- Escala: cada lámina ocupa el viewport sin deformarse ----------
+  var scale = 1;
+  function fit() {
+    scale = Math.min(innerWidth / 1920, innerHeight / 1080);
+    root.style.setProperty('--s', scale);
+  }
+  fit(); addEventListener('resize', fit);
+
+  // ---------- Marcar elementos que se revelan, con retraso escalonado ----------
+  var sel = '.kicker,.pre,.sub,h2,h3,.role,.rows,.photo-card,.hook,.bar,.lead,.key,.quote,.r2,' +
+            '.box,.card,.node,.legend,.meta,.num,.cols,.line,.small,.poster > div';
+  slides.forEach(function (s) {
+    if (s.classList.contains('crawl')) return;
+    var i = 0;
+    [].forEach.call(s.querySelectorAll(sel), function (el) {
+      if (el.parentElement.closest('.rv')) return;
+      el.classList.add('rv');
+      el.style.setProperty('--d', (0.1 + i++ * 0.11).toFixed(2) + 's');
+    });
+  });
+
+  // ---------- Scrollspy: índice lateral ----------
+  var spy = document.querySelector('.spy'), links = [];
+  slides.forEach(function (s, i) {
+    s.id = 'l' + (i + 1);
+    if (i && groups[i] !== groups[i - 1]) spy.appendChild(document.createElement('hr'));
+    var a = document.createElement('a');
+    a.href = '#l' + (i + 1);
+    a.style.setProperty('--c', color(s));
+    a.innerHTML = '<span>' + titles[i] + '</span><i></i>';
+    a.addEventListener('click', function (e) { e.preventDefault(); goTo(i); });
+    spy.appendChild(a); links.push(a);
+  });
+
+  var current = -1;
+  function setCurrent(i) {
+    if (i === current) return;
+    current = i;
+    links.forEach(function (a, k) { a.classList.toggle('on', k === i); if (k <= i) a.classList.add('seen'); });
+    root.style.setProperty('--hc', color(slides[i]));
+    history.replaceState(null, '', '#l' + (i + 1));
+  }
+
+  // ---------- Animaciones disparadas por scroll ----------
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var s = e.target;
+      if (e.intersectionRatio >= 0.5) {
+        if (!s.classList.contains('inview')) { s.classList.add('inview'); onEnter(s); }
+      } else if (e.intersectionRatio < 0.08) {
+        s.classList.remove('inview');           // al volver, la animación se repite
+      }
+    });
+    // la lámina más visible es la actual
+    var best = -1, bestVis = 0;
+    slides.forEach(function (s, i) {
+      var r = s.getBoundingClientRect();
+      var vis = Math.max(0, Math.min(innerHeight, r.bottom) - Math.max(0, r.top));
+      if (vis > bestVis) { bestVis = vis; best = i; }
+    });
+    if (best >= 0) setCurrent(best);
+  }, { threshold: [0, 0.08, 0.25, 0.5, 0.75, 1] });
+  slides.forEach(function (s) { io.observe(s); });
+
+  function onEnter(s) {
+    countUp(s);
+    [].forEach.call(s.querySelectorAll('.r2.open'), function (r) { r.classList.remove('open'); });
+  }
+
+  // ---------- Barra de progreso y parallax ----------
+  var ticking = false, hint = document.querySelector('.hint-keys');
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () {
+      var max = root.scrollHeight - innerHeight;
+      root.style.setProperty('--p', (max > 0 ? scrollY / max * 100 : 0) + '%');
+      slides.forEach(function (s) {
+        var bg = s.querySelector('.bg'); if (!bg) return;
+        var r = s.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        var off = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;   // -1 … 1
+        s.style.setProperty('--py', (off * -80).toFixed(1) + 'px');
+      });
+      if (scrollY > 40) hint.classList.add('gone');
+      ticking = false;
+    });
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // ---------- Navegación con teclado ----------
+  function goTo(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('button')) { if (e.key === ' ' || e.key === 'Enter') return; }
+    var next = ['ArrowDown', 'ArrowRight', 'PageDown', ' '], prev = ['ArrowUp', 'ArrowLeft', 'PageUp'];
+    if (next.indexOf(e.key) > -1) { e.preventDefault(); goTo(current + 1); }
+    else if (prev.indexOf(e.key) > -1) { e.preventDefault(); goTo(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    else if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen(); else root.requestFullscreen();
+    }
+  });
+
+  // ---------- Línea de tiempo: saltar al escenario ----------
+  var jumps = [null, 5, 7, 10, 12, 14];
+  [].forEach.call(document.querySelectorAll('.timeline .node'), function (n, k) {
+    if (jumps[k] == null) return;
+    n.dataset.go = jumps[k];
+    n.addEventListener('click', function () { goTo(jumps[k]); });
+  });
+
+  // ---------- Prólogo: clic para repetir ----------
+  var crawl = document.querySelector('.crawl');
+  crawl.addEventListener('click', function () {
+    crawl.classList.remove('inview'); void crawl.offsetWidth; crawl.classList.add('inview');
+  });
+
+  // ---------- Contadores en los reportes ----------
+  function countUp(s) {
+    [].forEach.call(s.querySelectorAll('.stat b, .reward b'), function (b) {
+      var o = b.dataset.o || (b.dataset.o = b.textContent);
+      var m = /^([−-]?)(\d[\d ]*?)(\s*)(\D.*)?$/.exec(o);
+      if (!m) return;
+      var v = parseInt(m[2].replace(/ /g, ''), 10);
+      if (!v) return;
+      var t0 = null;
+      function fmt(x) { return x >= 1000 ? String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(x); }
+      b.textContent = m[1] + '0' + m[3] + (m[4] || '');
+      setTimeout(function step(now) {
+        requestAnimationFrame(function tick(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / 1300); k = 1 - Math.pow(1 - k, 3);
+          b.textContent = m[1] + fmt(Math.round(v * k)) + m[3] + (m[4] || '');
+          if (k < 1) requestAnimationFrame(tick);
+        });
+      }, 700);
+    });
+  }
+
+  // ---------- R2-D2: pitidos sintetizados + traducción ----------
+  var ac;
+  function beeps() {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    var t = ac.currentTime + 0.02, start = t;
+    for (var i = 0; i < 8; i++) {
+      var o = ac.createOscillator(), g = ac.createGain(), f = 700 + Math.random() * 1900;
+      o.type = i % 3 ? 'sine' : 'square';
+      o.frequency.setValueAtTime(f, t);
+      o.frequency.exponentialRampToValueAtTime(f * (Math.random() > .5 ? 1.9 : .55), t + .09);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.07, t + .012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + .11);
+      o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + .13);
+      t += .06 + Math.random() * .07;
+    }
+    return (t - start) * 1000;
+  }
+  [].forEach.call(document.querySelectorAll('.r2 .beep'), function (btn) {
+    var r2 = btn.closest('.r2'), tr = r2.querySelector('.tr'), full = tr.textContent;
+    btn.addEventListener('click', function () {
+      var wait = beeps();
+      r2.classList.add('open'); tr.textContent = '';
+      setTimeout(function () {
+        var i = 0, iv = setInterval(function () {
+          tr.textContent = full.slice(0, ++i);
+          if (i >= full.length) clearInterval(iv);
+        }, 28);
+      }, wait);
+    });
+  });
+
+  // ---------- C-3PO: lee su cita en voz alta ----------
+  [].forEach.call(document.querySelectorAll('.quote'), function (q) {
+    q.addEventListener('click', function () {
+      if (!('speechSynthesis' in window)) return;
+      var speaking = q.classList.contains('speaking');
+      speechSynthesis.cancel();
+      [].forEach.call(document.querySelectorAll('.quote.speaking'), function (x) { x.classList.remove('speaking'); });
+      if (speaking) return;
+      var p = q.querySelector('p');
+      var txt = [].filter.call(p.childNodes, function (n) { return n.nodeType === 3; })
+        .map(function (n) { return n.textContent; }).join(' ').replace(/[«»]/g, '');
+      var u = new SpeechSynthesisUtterance(txt);
+      var voice = speechSynthesis.getVoices().filter(function (v) { return /^es/i.test(v.lang); })[0];
+      if (voice) u.voice = voice;
+      u.lang = voice ? voice.lang : 'es-MX'; u.pitch = 1.6; u.rate = 1.05;
+      u.onend = u.onerror = function () { q.classList.remove('speaking'); };
+      q.classList.add('speaking');
+      speechSynthesis.speak(u);
+    });
+  });
+
+  // ---------- Abrir en la lámina indicada por el enlace (#l7) ----------
+  var start = /^#l(\d+)$/.exec(location.hash);
+  if (start) setTimeout(function () { slides[start[1] - 1].scrollIntoView({ block: 'center', behavior: 'instant' }); }, 50);
+})();
+</script>
+</body>
+</html>
