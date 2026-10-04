@@ -1062,10 +1062,12 @@
 
   function fade(to, ms, done) {
     clearInterval(fadeTimer);
-    var from = player.getVolume ? player.getVolume() : 0, steps = Math.max(1, Math.round(ms / 40)), k = 0;
+    // basado en el tiempo transcurrido: termina a tiempo aunque el navegador frene los temporizadores
+    var from = player.getVolume ? player.getVolume() : 0, t0 = Date.now();
     fadeTimer = setInterval(function () {
-      k++; player.setVolume(Math.round(from + (to - from) * (k / steps)));
-      if (k >= steps) { clearInterval(fadeTimer); if (done) done(); }
+      var k = Math.min(1, (Date.now() - t0) / ms);
+      player.setVolume(Math.round(from + (to - from) * k));
+      if (k >= 1) { clearInterval(fadeTimer); if (done) done(); }
     }, 40);
   }
 
