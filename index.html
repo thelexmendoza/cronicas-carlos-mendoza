@@ -256,9 +256,9 @@
   .r2 .beep { all: unset; color: #fff; font-weight: 500; font-family: inherit; }
 
   /* ============ SITIO INTERACTIVO (solo pantalla; el PDF no cambia) ============ */
-  .spy, .progress, .hint-keys { display: none; }
+  .spy, .progress, .hint-keys, .radio { display: none; }
   @media screen {
-    html.js { scroll-snap-type: y proximity; scroll-behavior: smooth; background: #000; }
+    html.js { scroll-snap-type: y proximity; scroll-behavior: smooth; background: #000; overflow-x: hidden; }
     html.js .slide { zoom: var(--s, 1); margin: 0 auto; scroll-snap-align: center; }
 
     /* Revelado al entrar en pantalla */
@@ -341,6 +341,39 @@
       font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .1em; color: rgba(243,241,234,.45);
       transition: opacity .6s; }
     html.js .hint-keys.gone { opacity: 0; }
+
+    /* Reproductor de música */
+    html.js .radio { display: block; position: fixed; left: 18px; bottom: 44px; z-index: 70; width: 300px;
+      font-family: 'IBM Plex Mono', monospace; color: var(--ink);
+      background: rgba(7,8,12,.88); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(8px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.6); transition: border-color .4s; }
+    html.js .radio.on { border-color: var(--hc, var(--gold)); }
+    .radio-screen { height: 169px; overflow: hidden; transition: height .4s ease; background: #000; }
+    .radio-screen iframe, .radio-screen #yt { width: 300px; height: 169px; display: block; border: 0; }
+    .radio.min .radio-screen { height: 0; }
+    .radio:not(.on) .radio-screen { height: 0; }
+    .radio-bar { display: flex; align-items: center; gap: 12px; padding: 10px 12px; }
+    .radio-play { all: unset; cursor: pointer; width: 38px; height: 38px; border-radius: 50%; flex: none;
+      display: grid; place-items: center; background: var(--hc, var(--gold)); color: #000; transition: background .4s, scale .2s; }
+    .radio-play:hover { scale: 1.08; }
+    .radio-play:focus-visible, .radio-min:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .eq { display: flex; align-items: flex-end; gap: 2px; height: 16px; }
+    .eq i { width: 3px; height: 4px; background: #000; border-radius: 1px; }
+    .radio.playing .eq i { animation: eq .9s ease-in-out infinite alternate; }
+    .radio.playing .eq i:nth-child(2) { animation-delay: -.3s; } .radio.playing .eq i:nth-child(3) { animation-delay: -.6s; }
+    .radio.playing .eq i:nth-child(4) { animation-delay: -.15s; }
+    @keyframes eq { 0% { height: 3px; } 100% { height: 16px; } }
+    .radio:not(.playing) .eq { gap: 0; }
+    .radio:not(.playing) .eq i { display: none; }
+    .radio:not(.playing) .eq::before { content: '▶'; font-size: 15px; margin-left: 3px; }
+    .radio-info { min-width: 0; flex: 1; line-height: 1.35; }
+    .radio-title { display: block; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--hc, var(--gold)); }
+    .radio-sub { display: block; font-size: 11px; color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .radio-min { all: unset; cursor: pointer; padding: 4px 8px; color: var(--mute); font-size: 14px; transition: rotate .3s; }
+    .radio:not(.on) .radio-min { display: none; }
+    .radio.min .radio-min { rotate: 180deg; }
+    html.js .radio:not(.on) { animation: invite 2.4s ease-in-out infinite; }
+    @keyframes invite { 50% { box-shadow: 0 0 0 6px rgba(255,232,31,.12), 0 10px 40px rgba(0,0,0,.6); } }
   }
   @media screen and (prefers-reduced-motion: reduce) {
     html.js { scroll-behavior: auto; }
@@ -756,7 +789,21 @@
 
 <div class="progress"></div>
 <nav class="spy" aria-label="Índice"></nav>
-<div class="hint-keys">↓ scroll o flechas para avanzar</div>
+<div class="hint-keys">↓ scroll o flechas para avanzar · M música · F pantalla completa</div>
+
+<aside class="radio" aria-label="Música">
+  <div class="radio-screen"><div id="yt"></div></div>
+  <div class="radio-bar">
+    <button class="radio-play" type="button" aria-label="Activar música">
+      <span class="eq"><i></i><i></i><i></i><i></i></span>
+    </button>
+    <div class="radio-info">
+      <b class="radio-title">Banda sonora</b>
+      <span class="radio-sub">Clic para activar la música</span>
+    </div>
+    <button class="radio-min" type="button" aria-label="Mostrar u ocultar el video" title="Mostrar u ocultar el video">▾</button>
+  </div>
+</aside>
 
 <script>
 (function () {
@@ -781,7 +828,7 @@
   // ---------- Escala: cada lámina ocupa el viewport sin deformarse ----------
   var scale = 1;
   function fit() {
-    scale = Math.min(innerWidth / 1920, innerHeight / 1080);
+    scale = Math.min(root.clientWidth / 1920, innerHeight / 1080);
     root.style.setProperty('--s', scale);
   }
   fit(); addEventListener('resize', fit);
@@ -819,6 +866,7 @@
     links.forEach(function (a, k) { a.classList.toggle('on', k === i); if (k <= i) a.classList.add('seen'); });
     root.style.setProperty('--hc', color(slides[i]));
     history.replaceState(null, '', '#l' + (i + 1));
+    document.dispatchEvent(new CustomEvent('seccion', { detail: i }));
   }
 
   // ---------- Animaciones disparadas por scroll ----------
@@ -957,7 +1005,7 @@
     q.addEventListener('click', function () {
       if (!('speechSynthesis' in window)) return;
       var speaking = q.classList.contains('speaking');
-      speechSynthesis.cancel();
+      speechSynthesis.cancel(); document.dispatchEvent(new CustomEvent('voz', { detail: false }));
       [].forEach.call(document.querySelectorAll('.quote.speaking'), function (x) { x.classList.remove('speaking'); });
       if (speaking) return;
       var p = q.querySelector('p');
@@ -967,8 +1015,8 @@
       var voice = speechSynthesis.getVoices().filter(function (v) { return /^es/i.test(v.lang); })[0];
       if (voice) u.voice = voice;
       u.lang = voice ? voice.lang : 'es-MX'; u.pitch = 1.6; u.rate = 1.05;
-      u.onend = u.onerror = function () { q.classList.remove('speaking'); };
-      q.classList.add('speaking');
+      u.onend = u.onerror = function () { q.classList.remove('speaking'); document.dispatchEvent(new CustomEvent('voz', { detail: false })); };
+      q.classList.add('speaking'); document.dispatchEvent(new CustomEvent('voz', { detail: true }));
       speechSynthesis.speak(u);
     });
   });
@@ -976,6 +1024,128 @@
   // ---------- Abrir en la lámina indicada por el enlace (#l7) ----------
   var start = /^#l(\d+)$/.exec(location.hash);
   if (start) setTimeout(function () { slides[start[1] - 1].scrollIntoView({ block: 'center', behavior: 'instant' }); }, 50);
+})();
+</script>
+
+<script>
+// ============ MÚSICA: una pista de YouTube por sección, en loop ============
+(function () {
+  if (!document.documentElement.classList.contains('js')) return;
+
+  // Cada pista: varios videoId (si uno deja de existir se usa el siguiente) y segundo de inicio.
+  var TRACKS = {
+    main:    { t: 'Main Title',                 ids: ['e9lapdvLSGw', '54hoKbTWon4'] },
+    cantina: { t: 'Cantina Band',               ids: ['EsvfptdFXf4', 'vv9-v6E62ts'] },
+    fuerza:  { t: 'The Ways of the Force',      ids: ['KRLfQFU7ryY', 'u2W5YPQJqUs'] },
+    hoth:    { t: 'The Battle in the Snow',     ids: ['nq7OfcXBmUc', 'b9K3RepZ__I'] },
+    imperio: { t: 'The Imperial March',         ids: ['u7HF4JG1pOg', 'ZXLr1HU-QN8', 'vsMWVW4xtwI'] },
+    nube:    { t: "Lando's Palace",             ids: ['nIcSjmRWbCY', 'GFkzcLM9Jm0'] },
+    jabba:   { t: 'Jabba the Hutt',             ids: ['RJWxwjlVgd8', 'u3IpW846I20'] },
+    ewoks:   { t: 'Ewok Celebration',           ids: ['QEq-KYcj7Rs', 'po5HxJgyaMU'] },
+    fin:     { t: 'The Throne Room & End Title', ids: ['trYeKG17hYc', '8uykDDIT9L0'] }
+  };
+  // Pista por lámina (1 a 16)
+  var BY_SLIDE = ['main', 'main', 'cantina', 'cantina', 'cantina', 'fuerza', 'fuerza', 'hoth', 'hoth',
+                  'imperio', 'nube', 'nube', 'jabba', 'jabba', 'ewoks', 'fin'];
+  var VOL = 60;
+
+  var radio = document.querySelector('.radio'),
+      playBtn = radio.querySelector('.radio-play'),
+      title = radio.querySelector('.radio-title'),
+      sub = radio.querySelector('.radio-sub');
+  var player = null, ready = false, enabled = false, paused = false;
+  var section = 0, trackKey = null, idIndex = 0, fadeTimer = null, ducked = false;
+  var m = /^#l(\d+)$/.exec(location.hash); if (m) section = m[1] - 1;
+
+  function setInfo(t, s) { title.textContent = t; sub.textContent = s; }
+  function target() { return ducked ? Math.round(VOL * 0.25) : VOL; }
+
+  function fade(to, ms, done) {
+    clearInterval(fadeTimer);
+    var from = player.getVolume ? player.getVolume() : 0, steps = Math.max(1, Math.round(ms / 40)), k = 0;
+    fadeTimer = setInterval(function () {
+      k++; player.setVolume(Math.round(from + (to - from) * (k / steps)));
+      if (k >= steps) { clearInterval(fadeTimer); if (done) done(); }
+    }, 40);
+  }
+
+  function loadTrack(key, immediate) {
+    if (!ready || !enabled) return;
+    if (key === trackKey) return;
+    var go = function () {
+      trackKey = key; idIndex = 0;
+      player.setVolume(0);
+      player.loadVideoById(TRACKS[key].ids[0]);
+      setInfo('♪ ' + TRACKS[key].t, 'John Williams · Star Wars');
+      fade(target(), 1200);
+    };
+    if (immediate || !trackKey) go(); else fade(0, 500, go);
+  }
+
+  function enable() {
+    enabled = true; paused = false;
+    radio.classList.add('on');
+    playBtn.setAttribute('aria-label', 'Pausar música');
+    if (!player) { setInfo('Cargando…', 'Conectando con YouTube'); loadApi(); return; }
+    if (trackKey) { player.playVideo(); fade(target(), 600); }
+    else loadTrack(BY_SLIDE[section], true);
+  }
+  function pause() {
+    paused = true; playBtn.setAttribute('aria-label', 'Reanudar música');
+    fade(0, 400, function () { player.pauseVideo(); });
+  }
+
+  playBtn.addEventListener('click', function () {
+    if (!enabled || paused) enable(); else pause();
+  });
+  radio.querySelector('.radio-min').addEventListener('click', function () { radio.classList.toggle('min'); });
+  addEventListener('keydown', function (e) {
+    if ((e.key === 'm' || e.key === 'M') && !e.target.closest('input,textarea')) playBtn.click();
+  });
+
+  // Cambia de pista cuando el scrollspy cambia de sección
+  document.addEventListener('seccion', function (e) {
+    section = e.detail;
+    if (enabled && !paused) loadTrack(BY_SLIDE[section]);
+  });
+  // Baja el volumen mientras 3PO habla
+  document.addEventListener('voz', function (e) {
+    ducked = e.detail;
+    if (enabled && !paused && ready) fade(target(), 300);
+  });
+
+  function loadApi() {
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player('yt', {
+        width: 300, height: 169,
+        playerVars: { autoplay: 1, controls: 1, playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3 },
+        events: {
+          onReady: function () { ready = true; if (enabled) loadTrack(BY_SLIDE[section], true); },
+          onStateChange: function (e) {
+            if (e.data === YT.PlayerState.ENDED) { player.seekTo(0, true); player.playVideo(); }   // loop
+            radio.classList.toggle('playing', e.data === YT.PlayerState.PLAYING);
+            if (e.data === YT.PlayerState.PAUSED && !paused && enabled) {
+              // pausado desde el propio video de YouTube
+              paused = true; playBtn.setAttribute('aria-label', 'Reanudar música');
+            }
+            if (e.data === YT.PlayerState.PLAYING && paused) { paused = false; playBtn.setAttribute('aria-label', 'Pausar música'); }
+          },
+          onError: function () {
+            // video no disponible: probar el siguiente de la lista
+            var ids = TRACKS[trackKey].ids;
+            if (++idIndex < ids.length) player.loadVideoById(ids[idIndex]);
+            else setInfo('♪ ' + TRACKS[trackKey].t, 'No disponible en este momento');
+          }
+        }
+      });
+    };
+    var s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    s.onerror = function () { setInfo('Sin conexión', 'No se pudo cargar YouTube'); };
+    document.head.appendChild(s);
+  }
+
+  if (location.protocol === 'file:') sub.textContent = 'Funciona en GitHub Pages o con un servidor local';
 })();
 </script>
 </body>

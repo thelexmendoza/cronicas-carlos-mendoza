@@ -33,7 +33,10 @@ LAS CRÓNICAS DE CARLOS MENDOZA: CÓMO PONER TUS MONTAJES
    - El índice lateral (scrollspy) marca la sección actual; haz clic en un punto para saltar.
    - Clic en un botón de R2 [bip…] = pitidos + traducción. Clic en una cita de 3PO = la lee en voz alta.
    - Clic en un punto de la línea de tiempo = salta al escenario. Clic en el prólogo = se repite.
-   - F = pantalla completa. Enlace directo a una lámina: index.html#l9
+   - F = pantalla completa. M = música. Enlace directo a una lámina: index.html#l9
+   - MÚSICA: botón abajo a la izquierda. Una pista de YouTube por sección, en loop, con fundido entre pistas.
+     Para cambiar canciones edita TRACKS y BY_SLIDE al final de index.html (el id es lo que va después de
+     watch?v= en el enlace de YouTube). La música solo funciona en GitHub Pages o en un servidor local, no con doble clic.
    - Vista estática de una sola lámina: index.html#solo-7
 
 Créditos de los fondos: Wikimedia Commons (CC BY / CC BY-SA / dominio público) y Unsplash.
